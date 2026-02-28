@@ -1,6 +1,7 @@
 package main
 
 import (
+	"code"
 	"context"
 	"fmt"
 	"os"
@@ -14,12 +15,12 @@ func main() {
 		Usage: "print size of a file or directory",
 		Action: func(ctx context.Context, c *cli.Command) error {
 			if c.NArg() == 0 {
-				return fmt.Errorf("Ошибка: не указан путь к файлу или директории")
+				return fmt.Errorf("ошибка: не указан путь к файлу или директории")
 			}
 
 			path := c.Args().First()
 
-			size, err := GetSize(path)
+			size, err := code.GetSize(path)
 			if err != nil {
 				return err
 			}
@@ -29,35 +30,8 @@ func main() {
 		},
 	}
 
-	cmd.Run(context.Background(), os.Args)
-}
-
-func GetSize(filePath string) (string, error) {
-	var resultSize int64 = 0
-
-	fileInfo, err := os.Lstat(filePath)
-	if err != nil {
-		return "", fmt.Errorf("Ошибка при чтении файла или директории: %w", err)
+	if err := cmd.Run(context.Background(), os.Args); err != nil {
+		fmt.Fprintf(os.Stderr, "ошибка: %v\n", err)
+		os.Exit(1)
 	}
-
-	if fileInfo.IsDir() {
-		files, err := os.ReadDir(filePath)
-		if err != nil {
-			return "", fmt.Errorf("Ошибка при чтении директории: %w", err)
-		}
-
-		for _, file := range files {
-			if !file.IsDir() {
-				info, err := file.Info()
-				if err != nil {
-					return "", err
-				}
-				resultSize += info.Size()
-			}
-		}
-	} else {
-		resultSize = fileInfo.Size()
-	}
-
-	return fmt.Sprintf("%dB\t%s", resultSize, filePath), nil
 }
