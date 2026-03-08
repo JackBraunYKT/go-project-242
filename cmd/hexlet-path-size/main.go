@@ -64,7 +64,7 @@ func main() {
 				return err
 			}
 
-			fmt.Println(result)
+			fmt.Printf("%s\t%s", result, path)
 
 			return nil
 		},

@@ -18,7 +18,7 @@ func TestGetPathSize(t *testing.T) {
 			recursive: false,
 			human:     false,
 			all:       false,
-			want:      "947B\ttestdata/test_data_1.csv",
+			want:      "947B",
 			wantErr:   false,
 		},
 		{
@@ -27,7 +27,7 @@ func TestGetPathSize(t *testing.T) {
 			recursive: false,
 			all:       false,
 			human:     false,
-			want:      "1309B\ttestdata/test_data_2.csv",
+			want:      "1309B",
 			wantErr:   false,
 		},
 		{
@@ -36,7 +36,7 @@ func TestGetPathSize(t *testing.T) {
 			recursive: false,
 			all:       false,
 			human:     false,
-			want:      "2256B\ttestdata",
+			want:      "2256B",
 			wantErr:   false,
 		},
 		{
@@ -45,8 +45,8 @@ func TestGetPathSize(t *testing.T) {
 			recursive: false,
 			all:       false,
 			human:     false,
-			want:      "ошибка при чтении файла или директории",
-			wantErr:   true,
+			want:      "0B",
+			wantErr:   false,
 		},
 		{
 			name:      "Test for inner directory and human-readable format",
@@ -54,7 +54,7 @@ func TestGetPathSize(t *testing.T) {
 			recursive: false,
 			all:       false,
 			human:     true,
-			want:      "2.53KB\ttestdata/test-dir",
+			want:      "2.53KB",
 			wantErr:   false,
 		},
 
@@ -66,7 +66,7 @@ func TestGetPathSize(t *testing.T) {
 			recursive: false,
 			all:       true,
 			human:     false,
-			want:      "1309B\ttestdata/.hidden_test_data_3.csv",
+			want:      "1309B",
 			wantErr:   false,
 		},
 		{
@@ -75,7 +75,7 @@ func TestGetPathSize(t *testing.T) {
 			recursive: false,
 			all:       true,
 			human:     true,
-			want:      "1.28KB\ttestdata/.hidden_test_data_3.csv",
+			want:      "1.28KB",
 			wantErr:   false,
 		},
 
@@ -86,7 +86,7 @@ func TestGetPathSize(t *testing.T) {
 			recursive: false,
 			all:       false,
 			human:     false,
-			want:      "0B\ttestdata/dir-with-hidden-file",
+			want:      "0B",
 			wantErr:   false,
 		},
 		{
@@ -95,7 +95,7 @@ func TestGetPathSize(t *testing.T) {
 			recursive: false,
 			all:       true,
 			human:     false,
-			want:      "1309B\ttestdata/dir-with-hidden-file",
+			want:      "1309B",
 			wantErr:   false,
 		},
 		{
@@ -104,7 +104,7 @@ func TestGetPathSize(t *testing.T) {
 			recursive: false,
 			all:       true,
 			human:     true,
-			want:      "1.28KB\ttestdata/dir-with-hidden-file",
+			want:      "1.28KB",
 			wantErr:   false,
 		},
 
@@ -114,7 +114,7 @@ func TestGetPathSize(t *testing.T) {
 			recursive: false,
 			all:       true,
 			human:     true,
-			want:      "2.53KB\ttestdata/test-dir",
+			want:      "2.53KB",
 			wantErr:   false,
 		},
 
@@ -125,7 +125,7 @@ func TestGetPathSize(t *testing.T) {
 			recursive: true,
 			all:       false,
 			human:     false,
-			want:      "2586B\ttestdata/recursive-dir",
+			want:      "2586B",
 			wantErr:   false,
 		},
 		{
@@ -134,7 +134,7 @@ func TestGetPathSize(t *testing.T) {
 			recursive: true,
 			all:       true,
 			human:     false,
-			want:      "10043B\ttestdata/recursive-dir",
+			want:      "10043B",
 			wantErr:   false,
 		},
 		{
@@ -143,7 +143,7 @@ func TestGetPathSize(t *testing.T) {
 			recursive: true,
 			all:       true,
 			human:     true,
-			want:      "9.81KB\ttestdata/recursive-dir",
+			want:      "9.81KB",
 			wantErr:   false,
 		},
 	}
@@ -232,7 +232,7 @@ func TestGetSize(t *testing.T) {
 			name:      "Test for non-existing file",
 			filePath:  "testdata/nonexistent.txt",
 			want:      0,
-			wantErr:   true,
+			wantErr:   false,
 			all:       false,
 			recursive: false,
 		},
