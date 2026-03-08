@@ -3,12 +3,13 @@ package code
 import (
 	"fmt"
 	"os"
+	"strings"
 )
 
-func GetPathSize(filePath string, human bool) (string, error) {
+func GetPathSize(filePath string, human, all bool) (string, error) {
 	var result string
 
-	sizeBytes, err := GetSize(filePath)
+	sizeBytes, err := GetSize(filePath, all)
 	if err != nil {
 		return "ошибка при чтении файла или директории", err
 	}
@@ -16,14 +17,18 @@ func GetPathSize(filePath string, human bool) (string, error) {
 	if human {
 		result = fmt.Sprintf("%s\t%s", FormatSize(float64(sizeBytes)), filePath)
 	} else {
-		result = fmt.Sprintf("%d\t%s", sizeBytes, filePath)
+		result = fmt.Sprintf("%dB\t%s", sizeBytes, filePath)
 	}
 
 	return result, nil
 }
 
-func GetSize(filePath string) (int64, error) {
+func GetSize(filePath string, all bool) (int64, error) {
 	var bytes int64 = 0
+
+	if !all && isHiddenFile(filePath) {
+		return 0, fmt.Errorf("ошибка при чтении файла или директории: %w", os.ErrPermission)
+	}
 
 	fileInfo, err := os.Lstat(filePath)
 	if err != nil {
@@ -38,6 +43,9 @@ func GetSize(filePath string) (int64, error) {
 
 		for _, file := range files {
 			if !file.IsDir() {
+				if !all && isHiddenFile(file.Name()) {
+					continue
+				}
 				info, err := file.Info()
 				if err != nil {
 					return 0, err
@@ -61,5 +69,9 @@ func FormatSize(bytes float64) string {
 		i++
 	}
 
-	return fmt.Sprintf("%.2f %s", bytes, units[i])
+	return fmt.Sprintf("%.2f%s", bytes, units[i])
+}
+
+func isHiddenFile(filePath string) bool {
+	return strings.HasPrefix(filePath, ".")
 }

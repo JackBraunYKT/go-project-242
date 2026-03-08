@@ -11,6 +11,7 @@ import (
 
 func main() {
 	isHumanFormat := false
+	isAll := false
 
 	cmd := &cli.Command{
 		Name: "hexlet-path-size",
@@ -22,6 +23,11 @@ func main() {
 				Name:    "human",
 				Aliases: []string{"H"},
 				Usage:   "human-readable sizes (auto-select unit)",
+			},
+			&cli.BoolFlag{
+				Name:    "all",
+				Aliases: []string{"a"},
+				Usage:   "include hidden files and directories",
 			},
 		},
 
@@ -36,7 +42,11 @@ func main() {
 				isHumanFormat = true
 			}
 
-			result, err := code.GetPathSize(path, isHumanFormat)
+			if cmd.Bool("all") {
+				isAll = true
+			}
+
+			result, err := code.GetPathSize(path, isHumanFormat, isAll)
 			if err != nil {
 				return err
 			}
