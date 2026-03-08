@@ -16,7 +16,7 @@ func GetPathSize(filePath string, recursive, human, all bool) (string, error) {
 	}
 
 	if human {
-		result = fmt.Sprintf("%s", FormatSize(float64(sizeBytes)))
+		result = FormatSize(float64(sizeBytes))
 	} else {
 		result = fmt.Sprintf("%dB", sizeBytes)
 	}
@@ -27,7 +27,7 @@ func GetPathSize(filePath string, recursive, human, all bool) (string, error) {
 func GetSize(filePath string, recursive, all bool) (int64, error) {
 	var bytes int64 = 0
 
-	if !all && isHiddenFile(filePath) {
+	if !all && isHiddenFile(filepath.Base(filePath)) {
 		return 0, nil
 	}
 
@@ -39,7 +39,7 @@ func GetSize(filePath string, recursive, all bool) (int64, error) {
 	if fileInfo.IsDir() {
 		entries, err := os.ReadDir(filePath)
 		if err != nil {
-			return 0, fmt.Errorf("ошибка при чтении директории: %w", err)
+			return 0, nil
 		}
 
 		for _, entry := range entries {
