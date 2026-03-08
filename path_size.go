@@ -3,13 +3,14 @@ package code
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
-func GetPathSize(filePath string, human, all bool) (string, error) {
+func GetPathSize(filePath string, recursive, human, all bool) (string, error) {
 	var result string
 
-	sizeBytes, err := GetSize(filePath, all)
+	sizeBytes, err := GetSize(filePath, recursive, all)
 	if err != nil {
 		return "ошибка при чтении файла или директории", err
 	}
@@ -23,7 +24,7 @@ func GetPathSize(filePath string, human, all bool) (string, error) {
 	return result, nil
 }
 
-func GetSize(filePath string, all bool) (int64, error) {
+func GetSize(filePath string, recursive, all bool) (int64, error) {
 	var bytes int64 = 0
 
 	if !all && isHiddenFile(filePath) {
@@ -36,19 +37,29 @@ func GetSize(filePath string, all bool) (int64, error) {
 	}
 
 	if fileInfo.IsDir() {
-		files, err := os.ReadDir(filePath)
+		entries, err := os.ReadDir(filePath)
 		if err != nil {
 			return 0, fmt.Errorf("ошибка при чтении директории: %w", err)
 		}
 
-		for _, file := range files {
-			if !file.IsDir() {
-				if !all && isHiddenFile(file.Name()) {
+		for _, entry := range entries {
+			fullPath := filepath.Join(filePath, entry.Name())
+
+			if entry.IsDir() {
+				if recursive {
+					dirBytes, err := GetSize(fullPath, recursive, all)
+					if err != nil {
+						return 0, err
+					}
+					bytes += dirBytes
+				}
+			} else {
+				if !all && isHiddenFile(entry.Name()) {
 					continue
 				}
-				info, err := file.Info()
+				info, err := entry.Info()
 				if err != nil {
-					return 0, err
+					return 0, fmt.Errorf("ошибка при чтении файла: %w", err)
 				}
 				bytes += info.Size()
 			}

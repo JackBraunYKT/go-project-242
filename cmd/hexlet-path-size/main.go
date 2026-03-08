@@ -12,6 +12,7 @@ import (
 func main() {
 	isHumanFormat := false
 	isAll := false
+	isRecursive := false
 
 	cmd := &cli.Command{
 		Name: "hexlet-path-size",
@@ -28,6 +29,11 @@ func main() {
 				Name:    "all",
 				Aliases: []string{"a"},
 				Usage:   "include hidden files and directories",
+			},
+			&cli.BoolFlag{
+				Name:    "recursive",
+				Aliases: []string{"r"},
+				Usage:   "recursive size of directories",
 			},
 		},
 
@@ -46,7 +52,11 @@ func main() {
 				isAll = true
 			}
 
-			result, err := code.GetPathSize(path, isHumanFormat, isAll)
+			if cmd.Bool("recursive") {
+				isRecursive = true
+			}
+
+			result, err := code.GetPathSize(path, isRecursive, isHumanFormat, isAll)
 			if err != nil {
 				return err
 			}
