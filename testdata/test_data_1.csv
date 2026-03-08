@@ -1,0 +1,11 @@
+id,name,email,age,city,registration_date
+1,Александр Сидоров,alex.sidorov@example.com,28,Москва,2025-01-15
+2,Мария Петрова,maria.petrova@example.com,34,Санкт-Петербург,2025-02-01
+3,Иван Иванов,ivan.ivanov@example.com,42,Казань,2025-01-20
+4,Елена Смирнова,elena.smirnova@example.com,31,Екатеринбург,2025-02-10
+5,Дмитрий Волков,dmitry.volkov@example.com,26,Новосибирск,2025-02-15
+6,Анна Кузнецова,anna.kuznetsova@example.com,29,Москва,2025-01-25
+7,Сергей Морозов,sergey.morozov@example.com,45,Санкт-Петербург,2025-02-05
+8,Татьяна Лебедева,tatiana.lebedeva@example.com,33,Казань,2025-02-20
+9,Павел Орлов,pavel.orlov@example.com,27,Екатеринбург,2025-01-28
+10,Ольга Соколова,olga.sokolova@example.com,38,Новосибирск,2025-02-12
