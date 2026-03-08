@@ -10,22 +10,39 @@ import (
 )
 
 func main() {
+	isHumanFormat := false
+
 	cmd := &cli.Command{
-		Name:  "hexlet-path-size",
+		Name: "hexlet-path-size",
+
 		Usage: "print size of a file or directory",
-		Action: func(ctx context.Context, c *cli.Command) error {
-			if c.NArg() == 0 {
+
+		Flags: []cli.Flag{
+			&cli.BoolFlag{
+				Name:    "human",
+				Aliases: []string{"H"},
+				Usage:   "human-readable sizes (auto-select unit)",
+			},
+		},
+
+		Action: func(ctx context.Context, cmd *cli.Command) error {
+			if cmd.NArg() == 0 {
 				return fmt.Errorf("ошибка: не указан путь к файлу или директории")
 			}
 
-			path := c.Args().First()
+			path := cmd.Args().First()
 
-			size, err := code.GetSize(path)
+			if cmd.Bool("human") {
+				isHumanFormat = true
+			}
+
+			result, err := code.GetPathSize(path, isHumanFormat)
 			if err != nil {
 				return err
 			}
 
-			fmt.Println(size)
+			fmt.Println(result)
+
 			return nil
 		},
 	}
