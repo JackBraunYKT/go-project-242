@@ -54,7 +54,7 @@ func TestGetPathSize(t *testing.T) {
 			recursive: false,
 			all:       false,
 			human:     true,
-			want:      "2.53KB",
+			want:      "2.5KB",
 			wantErr:   false,
 		},
 
@@ -75,7 +75,7 @@ func TestGetPathSize(t *testing.T) {
 			recursive: false,
 			all:       true,
 			human:     true,
-			want:      "1.28KB",
+			want:      "1.3KB",
 			wantErr:   false,
 		},
 
@@ -104,7 +104,7 @@ func TestGetPathSize(t *testing.T) {
 			recursive: false,
 			all:       true,
 			human:     true,
-			want:      "1.28KB",
+			want:      "1.3KB",
 			wantErr:   false,
 		},
 
@@ -114,7 +114,7 @@ func TestGetPathSize(t *testing.T) {
 			recursive: false,
 			all:       true,
 			human:     true,
-			want:      "2.53KB",
+			want:      "2.5KB",
 			wantErr:   false,
 		},
 
@@ -143,7 +143,7 @@ func TestGetPathSize(t *testing.T) {
 			recursive: true,
 			all:       true,
 			human:     true,
-			want:      "9.81KB",
+			want:      "9.8KB",
 			wantErr:   false,
 		},
 	}
@@ -171,17 +171,22 @@ func TestFormatSize(t *testing.T) {
 		{
 			name:  "Test for bytes",
 			bytes: 512,
-			want:  "512.00B",
+			want:  "512B",
 		},
 		{
 			name:  "Test for kilobytes",
 			bytes: 2048,
-			want:  "2.00KB",
+			want:  "2.0KB",
+		},
+		{
+			name:  "Test for another kilobytes",
+			bytes: 2458,
+			want:  "2.4KB",
 		},
 		{
 			name:  "Test for megabytes",
 			bytes: 5 * 1024 * 1024,
-			want:  "5.00MB",
+			want:  "5.0MB",
 		},
 	}
 

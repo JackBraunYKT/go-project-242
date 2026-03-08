@@ -72,6 +72,9 @@ func GetSize(filePath string, recursive, all bool) (int64, error) {
 }
 
 func FormatSize(bytes float64) string {
+	if bytes < 1024 {
+		return fmt.Sprintf("%dB", int64(bytes))
+	}
 	units := []string{"B", "KB", "MB", "GB", "TB", "PB", "EB"}
 	i := 0
 
@@ -80,7 +83,7 @@ func FormatSize(bytes float64) string {
 		i++
 	}
 
-	return fmt.Sprintf("%.2f%s", bytes, units[i])
+	return fmt.Sprintf("%.1f%s", bytes, units[i])
 }
 
 func isHiddenFile(filePath string) bool {
