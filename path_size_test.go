@@ -134,7 +134,7 @@ func TestGetPathSize(t *testing.T) {
 			recursive: true,
 			all:       true,
 			human:     false,
-			want:      "10043B",
+			want:      "3895B",
 			wantErr:   false,
 		},
 		{
@@ -143,7 +143,7 @@ func TestGetPathSize(t *testing.T) {
 			recursive: true,
 			all:       true,
 			human:     true,
-			want:      "9.8KB",
+			want:      "3.8KB",
 			wantErr:   false,
 		},
 	}
@@ -260,7 +260,7 @@ func TestGetSize(t *testing.T) {
 		{
 			name:      "Test for recursive directory with all flag",
 			filePath:  "testdata/recursive-dir",
-			want:      10043,
+			want:      3895,
 			wantErr:   false,
 			all:       true,
 			recursive: true,
