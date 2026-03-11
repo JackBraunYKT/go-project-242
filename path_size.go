@@ -2,6 +2,7 @@ package code
 
 import (
 	"fmt"
+	"math"
 	"os"
 	"path/filepath"
 	"strings"
@@ -75,19 +76,20 @@ func getSize(filePath string, recursive, all bool) (int64, error) {
 	return bytes, nil
 }
 
+var units = []string{"B", "KB", "MB", "GB", "TB", "PB", "EB"}
+
 func formatSize(bytes float64) string {
 	if bytes < 1024 {
 		return fmt.Sprintf("%dB", int64(bytes))
 	}
-	units := []string{"B", "KB", "MB", "GB", "TB", "PB", "EB"}
-	i := 0
+	i := int(math.Log2(bytes) / 10)
 
-	for bytes >= 1024 && i < len(units)-1 {
-		bytes /= 1024
-		i++
+	if i >= len(units) {
+		i = len(units) - 1
 	}
 
-	return fmt.Sprintf("%.1f%s", bytes, units[i])
+	value := bytes / math.Pow(1024, float64(i))
+	return fmt.Sprintf("%.1f%s", value, units[i])
 }
 
 func isHiddenFile(filePath string) bool {
