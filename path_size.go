@@ -77,6 +77,10 @@ func getSize(filePath string, recursive, all bool) (int64, error) {
 		return nil
 	})
 
+	if err != nil {
+		return 0, err
+	}
+
 	return totalBytes, nil
 }
 
