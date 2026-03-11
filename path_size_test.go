@@ -192,7 +192,7 @@ func TestFormatSize(t *testing.T) {
 
 	for _, testItem := range tests {
 		t.Run(testItem.name, func(t *testing.T) {
-			got := FormatSize(testItem.bytes)
+			got := formatSize(testItem.bytes)
 			if got != testItem.want {
 				t.Errorf("FormatSize() = %v, want %v", got, testItem.want)
 			}
@@ -269,7 +269,7 @@ func TestGetSize(t *testing.T) {
 
 	for _, testItem := range tests {
 		t.Run(testItem.name, func(t *testing.T) {
-			got, err := GetSize(testItem.filePath, testItem.recursive, testItem.all)
+			got, err := getSize(testItem.filePath, testItem.recursive, testItem.all)
 			if (err != nil) != testItem.wantErr {
 				t.Errorf("GetSize() error = %v, wantErr %v", err, testItem.wantErr)
 				return
