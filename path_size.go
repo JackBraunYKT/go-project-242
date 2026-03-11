@@ -7,6 +7,10 @@ import (
 	"strings"
 )
 
+// GetPathSize возвращает размер файла или директории.
+// Если recursive равен true, размер директорий вычисляется рекурсивно.
+// Если human равен true, результат возвращается в человекочитаемом формате.
+// Если all равен false, скрытые файлы и директории не учитываются.
 func GetPathSize(filePath string, recursive, human, all bool) (string, error) {
 	var result string
 
